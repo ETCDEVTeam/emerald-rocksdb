@@ -5,6 +5,9 @@ sudo: true
 rust:
   - stable
   - beta
+os:
+- linux
+- osx
 
 addons:
   apt:
