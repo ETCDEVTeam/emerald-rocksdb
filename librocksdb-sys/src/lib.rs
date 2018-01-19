@@ -11,16 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 
-//! Raw bindings for RocksDB.
-//!
-//! This is simply a raw interface to the RocksDB C API. It is intended to underpin a higher-level library rather than for direct use.
-
-#![allow(dead_code, non_camel_case_types, non_upper_case_globals, non_snake_case)]
+#![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
+#![allow(non_upper_case_globals)]
 
 extern crate libc;
 
+<<<<<<< HEAD
 #[cfg(test)]
 mod test;
 
@@ -1030,3 +1028,6 @@ pub enum rocksdb_universal_compaction_options_t { }
 pub enum rocksdb_livefiles_t { }
 
 pub enum rocksdb_column_family_handle_t { }
+=======
+include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+>>>>>>> upstream/master
