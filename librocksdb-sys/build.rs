@@ -27,7 +27,7 @@ fn build_rocksdb() {
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=rocksdb/");
 
-    let mut config = gcc::Config::new();
+    let mut config = cc::Config::new();
     config.include("rocksdb/include/");
     config.include("rocksdb/");
     config.include("rocksdb/third-party/gtest-1.7.0/fused-src/");
@@ -116,7 +116,7 @@ fn build_rocksdb() {
 }
 
 fn build_snappy() {
-    let mut config = gcc::Config::new();
+    let mut config = cc::Config::new();
     config.include("snappy/");
     config.include(".");
 
