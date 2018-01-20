@@ -376,14 +376,9 @@ impl Options {
     /// opts.set_allow_concurrent_memtable_write(false);
     /// ```
     pub fn set_allow_concurrent_memtable_write(&mut self, allow: bool) {
-<<<<<<< HEAD
-        unsafe { ffi::rocksdb_options_set_allow_concurrent_memtable_write(self.inner,
-                                                                          allow as c_uchar) }
-=======
         unsafe {
             ffi::rocksdb_options_set_allow_concurrent_memtable_write(self.inner, allow as c_uchar)
         }
->>>>>>> upstream/master
     }
 
     /// Enable direct I/O mode for reading
