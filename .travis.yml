@@ -1,10 +1,10 @@
 language: rust
-cache: cargo
+dist: trusty
 sudo: true
+
 rust:
-- stable
-- beta
-- nightly
+  - stable
+  - beta
 os:
 - linux
 - osx
@@ -13,14 +13,15 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
+      - llvm-toolchain-trusty
     packages:
       - g++-5
+      - llvm-3.9-dev
+      - libclang-3.9-dev
+      - clang-3.9
 
 script:
-  - export RUST_BACKTRACE=full
   - cargo test --manifest-path=librocksdb-sys/Cargo.toml
   - cargo test
 
-cache:
-  directories:
-    - $HOME/.cache/
+cache: cargo

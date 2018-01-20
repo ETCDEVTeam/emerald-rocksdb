@@ -1,6 +1,9 @@
-extern crate gcc;
+extern crate cc;
+extern crate bindgen;
 
+use std::env;
 use std::fs;
+use std::path::PathBuf;
 
 fn link(name: &str, bundled: bool) {
     use std::env::var;
@@ -17,7 +20,10 @@ fn link(name: &str, bundled: bool) {
 
 fn fail_on_empty_directory(name: &str) {
     if fs::read_dir(name).unwrap().count() == 0 {
-        println!("The `{}` directory is empty, did you forget to pull the submodules?", name);
+        println!(
+            "The `{}` directory is empty, did you forget to pull the submodules?",
+            name
+        );
         println!("Try `git submodule update --init --recursive`");
         panic!();
     }
@@ -27,7 +33,20 @@ fn build_rocksdb() {
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=rocksdb/");
 
-    let mut config = gcc::Config::new();
+    let mut config = cc::Build::new();
+    let bindings = bindgen::Builder::default()
+        .header("rocksdb/include/rocksdb/c.h")
+        .hide_type("max_align_t") // https://github.com/rust-lang-nursery/rust-bindgen/issues/550
+        .ctypes_prefix("libc")
+        .generate()
+        .expect("unable to generate rocksdb bindings");
+
+    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
+    bindings
+        .write_to_file(out_path.join("bindings.rs"))
+        .expect("unable to write rocksdb bindings");
+
+    let mut config = cc::Build::new();
     config.include("rocksdb/include/");
     config.include("rocksdb/");
     config.include("rocksdb/third-party/gtest-1.7.0/fused-src/");
@@ -42,7 +61,8 @@ fn build_rocksdb() {
         .collect::<Vec<&'static str>>();
 
     // We have a pregenerated a version of build_version.cc in the local directory
-    lib_sources = lib_sources.iter()
+    lib_sources = lib_sources
+        .iter()
         .cloned()
         .filter(|file| *file != "util/build_version.cc")
         .collect::<Vec<&'static str>>();
@@ -71,7 +91,8 @@ fn build_rocksdb() {
         config.define("NOMINMAX", Some("1"));
 
         // Remove POSIX-specific sources
-        lib_sources = lib_sources.iter()
+        lib_sources = lib_sources
+            .iter()
             .cloned()
             .filter(|file| {
                 match *file {
@@ -98,6 +119,9 @@ fn build_rocksdb() {
         config.flag("-EHsc");
     } else {
         config.flag("-std=c++11");
+        // this was breaking the build on travis due to
+        // > 4mb of warnings emitted.
+        config.flag("-Wno-unused-parameter");
     }
     
     // this was breaking the build on travis due to
@@ -116,7 +140,7 @@ fn build_rocksdb() {
 }
 
 fn build_snappy() {
-    let mut config = gcc::Config::new();
+    let mut config = cc::Build::new();
     config.include("snappy/");
     config.include(".");
 
