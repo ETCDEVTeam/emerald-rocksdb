@@ -123,10 +123,6 @@ fn build_rocksdb() {
         // > 4mb of warnings emitted.
         config.flag("-Wno-unused-parameter");
     }
-    
-    // this was breaking the build on travis due to
-    // > 4mb of warnings emitted.
-    config.flag("-Wno-unused-parameter");
 
     for file in lib_sources {
         let file = "rocksdb/".to_string() + file;
