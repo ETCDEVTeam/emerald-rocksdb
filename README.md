@@ -1,7 +1,7 @@
 rust-rocksdb
 ============
-[![Build Status](https://travis-ci.org/ethereumproject/emerald-rocksdb.svg?branch=master)](https://travis-ci.org/ethereumproject/emerald-rocksdb) 
-[![Build status](https://ci.appveyor.com/api/projects/status/hqfck32sw09eft0i?svg=true)](https://ci.appveyor.com/project/ethereumproject/emerald-rocksdb)
+[![Build Status](https://travis-ci.org/ETCDEVTeam/emerald-rocksdb.svg?branch=master)](https://travis-ci.org/ETCDEVTeam/emerald-rocksdb) 
+[![Build status](https://ci.appveyor.com/api/projects/status/hqfck32sw09eft0i?svg=true)](https://ci.appveyor.com/project/ETCDEVTeam/emerald-rocksdb)
 [![crates.io](http://meritbadge.herokuapp.com/rocksdb)](https://crates.io/crates/rocksdb)
 [![documentation](https://docs.rs/rocksdb/badge.svg)](https://docs.rs/rocksdb)
 
