@@ -92,5 +92,6 @@ build_script:
 # directly or perform other testing commands. Rust will automatically be placed in the PATH
 # environment variable.
 test_script:
+  - cargo test --manifest-path=librocksdb-sys/Cargo.toml
   - cargo test --all --verbose %cargoflags%
 
