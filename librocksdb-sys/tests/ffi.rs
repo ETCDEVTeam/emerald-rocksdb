@@ -20,7 +20,7 @@
 #[macro_use]
 extern crate const_cstr;
 extern crate libc;
-extern crate librocksdb_sys as ffi;
+extern crate emerald_librocksdb_sys as ffi;
 
 use ::ffi::*;
 use ::libc::*;
